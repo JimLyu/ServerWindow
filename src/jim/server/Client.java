@@ -266,7 +266,50 @@ class Client extends Thread{
 //	SVM分析
 //===================================================================================//
 	private void svm_predict(long time, double la, double oA, double max1, double min1, double eq2, double deC, long start, long end) {
+		new Thread(){
+			@Override
+			public void run(){
+				try{
+					String timeFormat ="[" +  new SimpleDateFormat("MM/dd HH:mm:ss").format(new Date(time)) + "] ";
+					String str = "SVM分類結果： " + userName + " 於" + timeFormat;
+					SupportVectors.Data data = ServerMain.svm.predict(userID, time, la, oA, max1, min1, eq2, deC);
+					if (data.result){
+						ServerMain.log(str + "發生跌倒！",Color.RED, str.length(), -1);
+						ServerMain.sqlClient.insert(userID, time, start, end, null);
+						report.put(time, data);
+						if(ServerMain.adminIndex == -1)				//無Admin
+							new MsgSendThread("/fall " + time).start();
+						else{										//有Admin
+							new MsgSendThread("/fall "+ time);
+							ServerMain.serverSays("/cmd 發送簡訊");
+						}
 
+					}else{
+						ServerMain.log(str + "未發生跌倒。",Color.GREEN, str.length(), -1);
+					}
+					sleep(2000);
+
+					//顯示圖表
+					ResultSet rst = ServerMain.sqlClient.getData(userID, time - 1375,	time + 1375);
+					ArrayList<Float> y = new ArrayList<Float>();
+					ArrayList<Long> x = new ArrayList<Long>();
+					long start = 1500000000000l;
+					while(rst.next()){
+						long datax = rst.getLong(1);
+						start = (start>datax)? datax : start;
+						Float datay = projection(rst.getFloat(2), rst.getFloat(3), rst.getFloat(4), rst.getFloat(5), rst.getFloat(6), rst.getFloat(7));
+						x.add(datax);
+						y.add(datay);
+						System.out.println("(" + (datax-start) + ", " + datay + ")" + ((datax==time)?" fall":""));
+					}
+//					String title = timeFormat + "ms : m/s^2";
+//					MainFrame.plot(userName + title, time-start, x, y, 250);
+				}catch(Exception e){
+					ServerMain.log(e.toString());
+					e.printStackTrace();
+				}
+			}
+		}.start();
 	}
 	
 	//向量絕對值
