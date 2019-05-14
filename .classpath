@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="icons"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JDBC"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JSON"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SVM"/>
+	<classpathentry kind="lib" path="C:/Users/LABUSE/Documents/Fall Detector/lib/libsvm-master/java/SvmProject_.jar"/>
+	<classpathentry kind="lib" path="C:/Users/LABUSE/Documents/Fall Detector/lib/Json/java-json.jar"/>
+	<classpathentry kind="lib" path="C:/Users/LABUSE/Documents/Fall Detector/lib/Microsoft JDBC Driver 6.0 for SQL Server/sqljdbc_6.0/cht/sqljdbc42.jar"/>
+	<classpathentry kind="lib" path="C:/Users/LABUSE/Documents/Fall Detector/lib/Twilio/twilio-7.9.1-jar-with-dependencies.jar"/>
+	<classpathentry kind="lib" path="C:/Users/LABUSE/Documents/Fall Detector/lib/apache-cxf-3.1.12-src.zip"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
